@@ -1,4 +1,4 @@
-package entity;
+package it.finsoft.entity;
 
 import javax.json.Json;
 import javax.json.JsonObject;

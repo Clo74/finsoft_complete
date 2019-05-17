@@ -1,4 +1,4 @@
-package rest;
+package it.finsoft.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

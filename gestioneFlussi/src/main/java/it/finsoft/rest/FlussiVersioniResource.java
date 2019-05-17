@@ -1,4 +1,4 @@
-package rest;
+package it.finsoft.rest;
 
 import java.util.List;
 
@@ -15,8 +15,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import business.FlussoVersioneStore;
-import entity.FlussoVersione;
+import it.finsoft.business.FlussoVersioneStore;
+import it.finsoft.entity.Elaborazione;
+import it.finsoft.entity.FlussoVersione;
 
 @Path("/versioni")
 public class FlussiVersioniResource {
@@ -70,4 +71,10 @@ public class FlussiVersioniResource {
 		store.remove(id);
 	}
 	
+    @GET
+	@Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}/elaborazioni")
+    public List<Elaborazione> findElab(@PathParam("id") Integer id) {
+        return store.findElab(id);
+    }	
 }

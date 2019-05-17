@@ -1,4 +1,4 @@
-package rest;
+package it.finsoft.rest;
 
 import java.util.List;
 
@@ -15,25 +15,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import business.FlussoStore;
-import entity.Flusso;
+import it.finsoft.business.ElaborazioneStore;
+import it.finsoft.entity.Elaborazione;
 
-@Path("/flussi")
-public class FlussiResource {
+@Path("/elaborazioni")
+public class ElaborazioniResource {
 
 	@Inject
-	FlussoStore store;
+	ElaborazioneStore store;
+	
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Flusso> getAll() {
+	public List<Elaborazione> getAll() {
 		return store.findAll();
 	}
 
 	@GET
 	@Path("/pagin")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Flusso> findAllPag(@DefaultValue("0") @QueryParam("start") Integer start,
+	public List<Elaborazione> findAllPag(@DefaultValue("0") @QueryParam("start") Integer start,
 			@DefaultValue("10") @QueryParam("nrRec") Integer nrRec) {
 
 		return store.findAllPag(start, nrRec);
@@ -42,15 +43,15 @@ public class FlussiResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
-	public Flusso find(@PathParam("id") Integer id) {
+	public Elaborazione find(@PathParam("id") Integer id) {
 		return store.findId(id);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Flusso create(Flusso c) {
-		Flusso saved = store.save(c);
+	public Elaborazione create(Elaborazione c) {
+		Elaborazione saved = store.save(c);
 		return saved;
 	}
 
@@ -58,7 +59,7 @@ public class FlussiResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
-	public Flusso update(@PathParam("id") Integer id, Flusso c) {
+	public Elaborazione update(@PathParam("id") Integer id, Elaborazione c) {
 		c.setId(id);
 		return store.save(c);
 	}
@@ -67,5 +68,5 @@ public class FlussiResource {
 	@Path("{id}")
 	public void delete(@PathParam("id") Integer id) {
 		store.remove(id);
-	}
+	}	
 }

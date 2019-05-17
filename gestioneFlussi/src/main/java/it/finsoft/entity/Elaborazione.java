@@ -1,7 +1,8 @@
-package entity;
+package it.finsoft.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 //import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Elaborazione.findAll",query="select e from Elaborazione e order by e.dataOra desc"),
+
 	})
 @Table(name="t_elaborazioni")
 public class Elaborazione  implements Serializable {
@@ -40,6 +43,9 @@ public class Elaborazione  implements Serializable {
 	@Column(name="utente")
 	private String utente;
 
+	@ManyToMany(mappedBy = "elaborazioni_input")
+	Set<FlussoVersione> versioni;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -57,7 +63,7 @@ public class Elaborazione  implements Serializable {
 	public void setDataOra(LocalDateTime dataOra) {
 		this.dataOra = dataOra;
 	}
-
+	
 	public String getUtente() {
 		return utente;
 	}
@@ -93,7 +99,8 @@ public class Elaborazione  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Elaborazione [id=" + id + ", dataOra=" + dataOra + ", utente=" + utente + "]";
+		return "{id:" + id + ", dataOra:'" + dataOra + "', utente:'" + utente + "'}";
+		
 	}
 	
 	

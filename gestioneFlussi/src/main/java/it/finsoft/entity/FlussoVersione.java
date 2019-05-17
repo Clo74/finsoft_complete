@@ -1,9 +1,9 @@
-package entity;
+package it.finsoft.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 //import javax.json.bind.annotation.JsonbDateFormat;
 import javax.persistence.Column;
@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @NamedQueries({
 	@NamedQuery(name="FlussoVersione.findAll",query="select v from FlussoVersione v order by v.data desc"),
 	@NamedQuery(name="FlussoVersione.byIdFlus",query="select v from FlussoVersione v where v.flusso.id = :idFlus order by v.data desc"),
+	@NamedQuery(name="FlussoVersione.getElab",query="select e from Elaborazione e inner join e.versioni v where v.id = :idFluss"),
 	})
 @Table(name="t_flussi_versioni")
 public class FlussoVersione  implements Serializable {
@@ -61,8 +62,19 @@ public class FlussoVersione  implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_elaborazione",
                     referencedColumnName = "id")
     )
-    private List<Elaborazione> elaborazioni = new ArrayList<>();
+    private Set<Elaborazione> elaborazioni_input = new TreeSet<>();
 
+   /* @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "t_Elaborazioni_output",
+            joinColumns = @JoinColumn(name = "id_flusso_versione",
+                    referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_elaborazione",
+                    referencedColumnName = "id")
+    )
+    private List<Elaborazione> elaborazioni_output = new ArrayList<>();*/
+    
+    
 	public Integer getId() {
 		return id;
 	}
@@ -117,12 +129,13 @@ public class FlussoVersione  implements Serializable {
 		this.flusso = flusso;
 	}
 
-	public List<Elaborazione> getElaborazioni() {
-		return elaborazioni;
+
+	public Set<Elaborazione> getElaborazioni_input() {
+		return elaborazioni_input;
 	}
 
-	public void setElaborazioni(List<Elaborazione> elaborazioni) {
-		this.elaborazioni = elaborazioni;
+	public void setElaborazioni_input(Set<Elaborazione> elaborazioni_input) {
+		this.elaborazioni_input = elaborazioni_input;
 	}
 
 	@Override
@@ -152,9 +165,9 @@ public class FlussoVersione  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FlussoVersione [id=" + id + ", data=" + data + ", versione=" + versione + ", flusso=" + flusso 
-				+ ", elaborazioni=" + elaborazioni + "]";
-	}    
+		return "FlussoVersione [id=" + id + ", data=" + data + ", versione=" + versione + ", flusso=" + flusso
+				+ ", elaborazioni_input=" + elaborazioni_input + "]";
+	}
 
     
 }

@@ -1,4 +1,4 @@
-package business;
+package it.finsoft.business;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import entity.Flusso;
+import it.finsoft.entity.Flusso;
 
 @Stateless
 public class FlussoStore {

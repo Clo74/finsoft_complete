@@ -1,4 +1,4 @@
-package entity;
+package it.finsoft.entity;
 
 import java.io.Serializable;
 import java.util.Set;
